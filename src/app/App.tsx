@@ -1,35 +1,36 @@
-import { useEffect } from "react";
-import "./App.css";
-import { TodolistsList } from "features/TodolistsList/TodolistsList";
-import { useAppDispatch, useAppSelector } from "./store";
-import { RequestStatusType } from "./app-reducer";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import Container from "@mui/material/Container";
-import LinearProgress from "@mui/material/LinearProgress";
-import { Menu } from "@mui/icons-material";
-import { ErrorSnackbar } from "../components/ErrorSnackbar/ErrorSnackbar";
-import { Login } from "features/Login/Login";
-import { Navigate, Route, Routes } from "react-router-dom";
-import { logOutTC, meTC } from "features/Login/auth-reducer";
-import CircularProgress from "@mui/material/CircularProgress";
+import { useEffect } from "react"
+import "./App.css"
+import { TodolistsList } from "features/TodolistsList/TodolistsList"
+import { useAppDispatch, useAppSelector } from "./store"
+import { RequestStatusType } from "./app-reducer"
+import AppBar from "@mui/material/AppBar"
+import Toolbar from "@mui/material/Toolbar"
+import IconButton from "@mui/material/IconButton"
+import Typography from "@mui/material/Typography"
+import Button from "@mui/material/Button"
+import Container from "@mui/material/Container"
+import LinearProgress from "@mui/material/LinearProgress"
+import { Menu } from "@mui/icons-material"
+import { ErrorSnackbar } from "../components/ErrorSnackbar/ErrorSnackbar"
+import { Login } from "features/Login/Login"
+import { Navigate, Route, Routes } from "react-router-dom"
+import { logOutTC, meTC } from "features/Login/auth-reducer"
+import CircularProgress from "@mui/material/CircularProgress"
+import { selectIsInitialized, selectStatus } from "./app-selectors"
 
 function App() {
-  const dispatch = useAppDispatch();
-  const status = useAppSelector<RequestStatusType>((state) => state.app.status);
-  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn);
-  const isInitialized = useAppSelector<boolean>((state) => state.app.isInitialized);
+  const dispatch = useAppDispatch()
+  const status = useAppSelector<RequestStatusType>(selectStatus)
+  const isLoggedIn = useAppSelector<boolean>((state) => state.auth.isLoggedIn)
+  const isInitialized = useAppSelector<boolean>(selectIsInitialized)
 
   const logOutHandler = () => {
-    dispatch(logOutTC());
-  };
+    dispatch(logOutTC())
+  }
 
   useEffect(() => {
-    dispatch(meTC());
-  }, []);
+    dispatch(meTC())
+  }, [])
 
   if (!isInitialized) {
     return (
@@ -43,7 +44,7 @@ function App() {
       >
         <CircularProgress />
       </div>
-    );
+    )
   }
 
   return (
@@ -72,7 +73,7 @@ function App() {
         </Routes>
       </Container>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
